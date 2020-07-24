@@ -17,8 +17,8 @@ class Matrix:
             for _ in range(self.cols):
                 self.data[i].append(0)
 
-    def print(self):
-        print(self.data)
+    def __str__(self):
+        return str(self.data)
 
     def fromArray(arr):
         m = Matrix(len(arr), 1)
