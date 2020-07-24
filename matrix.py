@@ -3,6 +3,11 @@ from random import random
 
 class Matrix:
     def __init__(self, rows, cols):
+        Matrix.fromArray = staticmethod(Matrix.fromArray)
+        Matrix.transpose = staticmethod(Matrix.transpose)
+        Matrix.multiply1 = staticmethod(Matrix.multiply1)
+        Matrix.map2 = staticmethod(Matrix.map2)
+
         self.rows = rows
         self.cols = cols
         self.data = []
@@ -101,9 +106,3 @@ class Matrix:
             for j in range(result.cols):
                 result.data[i][j] = func(m.data[i][j])
         return result
-
-
-Matrix.fromArray = staticmethod(Matrix.fromArray)
-Matrix.transpose = staticmethod(Matrix.transpose)
-Matrix.multiply1 = staticmethod(Matrix.multiply1)
-Matrix.map2 = staticmethod(Matrix.map2)
