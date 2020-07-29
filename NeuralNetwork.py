@@ -12,23 +12,30 @@ def dsigmoid(x):
 
 
 class NeuralNetwork:
-    def __init__(self, input_nodes, hidden_nodes, output_nodes):
-        self.input_nodes = input_nodes
-        self.hidden_nodes = hidden_nodes
-        self.output_nodes = output_nodes
-
-        self.weights_ih = Matrix(self.hidden_nodes, self.input_nodes)
-        self.weights_ho = Matrix(self.output_nodes, self.hidden_nodes)
+    def __init__(self, input_nodes, hidden_nodes=False, output_nodes=False):
+        if not hidden_nodes:
+            a = input_nodes
+            self.input_nodes = a.input_nodes
+            self.hidden_nodes = a.hidden_nodes
+            self.output_nodes = a.output_nodes
+            self.weights_ih = a.weights_ih.copy()
+            self.weights_ho = a.weights_ho.copy()
+            self.weights_ho_t = a.weights_ho_t.copy()
+            self.bias_h = a.bias_h.copy()
+            self.bias_o = a.bias_o.copy()
+        else:
+            self.input_nodes = input_nodes
+            self.hidden_nodes = hidden_nodes
+            self.output_nodes = output_nodes
+            self.weights_ih = Matrix(self.hidden_nodes, self.input_nodes)
+            self.weights_ho = Matrix(self.output_nodes, self.hidden_nodes)
+            self.weights_ho_t = Matrix.transpose(self.weights_ho)
+            self.bias_h = Matrix(self.hidden_nodes, 1)
+            self.bias_o = Matrix(self.output_nodes, 1)
         self.weights_ih.randomize()
         self.weights_ho.randomize()
-
-        self.weights_ho_t = Matrix.transpose(self.weights_ho)
-
-        self.bias_h = Matrix(self.hidden_nodes, 1)
-        self.bias_o = Matrix(self.output_nodes, 1)
         self.bias_h.randomize()
         self.bias_o.randomize()
-
         self.learning_rate = 0.1
 
     def predict(self, input_array):
@@ -98,6 +105,9 @@ class NeuralNetwork:
         self.weights_ho.map1(mutate)
         self.bias_h.map1(mutate)
         self.bias_o.map1(mutate)
+
+    def copy(self):
+        return NeuralNetwork(self)
 
 
 # Random Gaussian

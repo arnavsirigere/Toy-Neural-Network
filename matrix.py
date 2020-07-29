@@ -106,3 +106,10 @@ class Matrix:
             for j in range(result.cols):
                 result.data[i][j] = func(m.data[i][j])
         return result
+
+    def copy(self):
+        m = Matrix(self.rows, self.cols)
+        for i in range(self.rows):
+            for j in range(self.cols):
+                m.data[i][j] = self.data[i][j]
+        return m
