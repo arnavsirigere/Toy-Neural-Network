@@ -1,7 +1,6 @@
 from matrix import Matrix
 import math
-from numpy import random
-from random import random as r
+from random import random
 
 
 def sigmoid(x):
@@ -94,8 +93,34 @@ class NeuralNetwork:
         self.bias_h.add(hidden_gradients)
 
     def mutate(self, rate):
-        def mutate(x): return x + random.normal(loc=0, scale=0.1) if r() < rate else x
+        def mutate(x): return x + randomGaussian(0, 0.1) if random() < rate else x
         self.weights_ih.map1(mutate)
         self.weights_ho.map1(mutate)
         self.bias_h.map1(mutate)
         self.bias_o.map1(mutate)
+
+
+# Random Gaussian
+y2 = None
+previous = False
+
+
+def randomGaussian(mean=0, sd=1):
+    y1, x1, x2, w = None, None, None, None
+    global previous, y2
+    if previous:
+        y1 = y2
+        previous = False
+    else:
+        while True:
+            x1 = random() * 2 - 1
+            x2 = random() * 2 - 1
+            w = x1 * x1 + x2 * x2
+            if w < 1:
+                break
+        w = math.sqrt((-2 * math.log(w)) / w)
+        y1 = x1 * w
+        y2 = x2 * w
+        previous = True
+
+    return y1 * sd + mean
