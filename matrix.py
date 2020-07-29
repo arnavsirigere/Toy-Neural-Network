@@ -3,11 +3,6 @@ from random import random
 
 class Matrix:
     def __init__(self, rows, cols):
-        Matrix.fromArray = staticmethod(Matrix.fromArray)
-        Matrix.transpose = staticmethod(Matrix.transpose)
-        Matrix.multiply1 = staticmethod(Matrix.multiply1)
-        Matrix.map2 = staticmethod(Matrix.map2)
-
         self.rows = rows
         self.cols = cols
         self.data = []
@@ -20,6 +15,7 @@ class Matrix:
     def __str__(self):
         return str(self.data)
 
+    @staticmethod
     def fromArray(arr):
         m = Matrix(len(arr), 1)
         for i in range(len(arr)):
@@ -40,6 +36,7 @@ class Matrix:
                 r = r if random() < 0.5 else r - 1
                 self.data[i][j] = r
 
+    @staticmethod
     def subtract(a, b):
         result = Matrix(a.rows, a.cols)
         for i in range(a.rows):
@@ -57,6 +54,7 @@ class Matrix:
                 for j in range(self.cols):
                     self.data[i][j] += n
 
+    @staticmethod
     def transpose(matrix):
         result = Matrix(matrix.cols, matrix.rows)
         for i in range(matrix.rows):
@@ -65,6 +63,7 @@ class Matrix:
         return result
 
     # Matrix Multiplication
+    @staticmethod
     def multiply1(a, b):
         if a.cols != b.rows:
             print('Invalid Matrices!')
@@ -100,6 +99,7 @@ class Matrix:
             for j in range(self.cols):
                 self.data[i][j] = func(self.data[i][j])
 
+    @staticmethod
     def map2(m, func):
         result = Matrix(m.rows, m.cols)
         for i in range(result.rows):
