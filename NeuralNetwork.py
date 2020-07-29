@@ -1,5 +1,7 @@
 from matrix import Matrix
 import math
+from numpy import random
+from random import random as r
 
 
 def sigmoid(x):
@@ -90,3 +92,10 @@ class NeuralNetwork:
         # Adjust Input -> Hidden weights and hidden biases
         self.weights_ih.add(weight_ih_deltas)
         self.bias_h.add(hidden_gradients)
+
+    def mutate(self, rate):
+        def mutate(x): return x + random.normal(loc=0, scale=0.1) if r() < rate else x
+        self.weights_ih.map1(mutate)
+        self.weights_ho.map1(mutate)
+        self.bias_h.map1(mutate)
+        self.bias_o.map1(mutate)
